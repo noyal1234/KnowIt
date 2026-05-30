@@ -1,0 +1,11 @@
+.DS_Store
+.venv/
+*.log
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+*.pem
+credentials.json
+service-account*.json
