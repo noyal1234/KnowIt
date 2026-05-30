@@ -10,8 +10,12 @@ To refresh regulatory data on an existing DB:
 import argparse
 import asyncio
 import csv
+import logging
 import sys
 from pathlib import Path
+
+logging.basicConfig(level=logging.INFO, format="%(message)s")
+logger = logging.getLogger(__name__)
 
 _BACKEND_ROOT = Path(__file__).resolve().parents[1]
 if str(_BACKEND_ROOT) not in sys.path:
@@ -48,13 +52,13 @@ async def seed(*, force: bool = False) -> None:
     async with async_session_factory() as session:
         existing = (await session.execute(select(RegulatoryAdditive.id).limit(1))).scalar_one_or_none()
         if existing and not force:
-            print("Regulatory data already seeded — skipping (use --force to reload)")
+            logger.info("Regulatory data already seeded — skipping (use --force to reload)")
             return
 
         if force and existing:
             await session.execute(delete(RegulatoryAdditive))
             await session.commit()
-            print("Cleared existing regulatory additives")
+            logger.info("Cleared existing regulatory additives")
 
         seen: set[tuple[str, str | None]] = set()
         for filename in FILES:
@@ -89,7 +93,7 @@ async def seed(*, force: bool = False) -> None:
                         )
                     )
         await session.commit()
-        print(f"Seeded {len(seen)} regulatory additives")
+        logger.info("Seeded %s regulatory additives", len(seen))
 
 
 if __name__ == "__main__":

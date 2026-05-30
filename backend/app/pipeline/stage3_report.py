@@ -114,9 +114,9 @@ async def run_stage3_report(
                 user=user,
                 temperature=0.2,
                 max_tokens=2000,
-                model="meditron:8b",
+                model=settings.model_stage3_ollama,
             )
-            llm_provider = "meditron:8b"
+            llm_provider = settings.model_stage3_ollama
         except Exception:
             data, llm_provider = await llm_complete_json_with_fallback(
                 primary=settings.provider_llm,

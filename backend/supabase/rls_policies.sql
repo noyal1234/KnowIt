@@ -4,6 +4,7 @@ ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scans ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scan_reports ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ingredient_watchlist ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY profiles_select_own ON profiles
     FOR SELECT USING (user_id = auth.uid());
@@ -27,6 +28,15 @@ CREATE POLICY scan_reports_select_own ON scan_reports
 
 CREATE POLICY user_products_all_own ON user_products
     FOR ALL USING (user_id = auth.uid());
+
+CREATE POLICY ingredient_watchlist_select_own ON ingredient_watchlist
+    FOR SELECT USING (user_id = auth.uid());
+
+CREATE POLICY ingredient_watchlist_insert_own ON ingredient_watchlist
+    FOR INSERT WITH CHECK (user_id = auth.uid());
+
+CREATE POLICY ingredient_watchlist_delete_own ON ingredient_watchlist
+    FOR DELETE USING (user_id = auth.uid());
 
 -- Storage bucket: label-images (create via Supabase dashboard or CLI)
 -- Path pattern: {user_id}/{scan_id}.jpg

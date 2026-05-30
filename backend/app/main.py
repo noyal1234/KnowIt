@@ -9,6 +9,7 @@ from sqlalchemy import text
 from app.api.v1 import auth, dashboard, products, profile, scan, scans, watchlist
 from app.config import get_settings
 from app.core.rate_limit import limiter
+from app.models.schemas import HealthResponse
 from app.db.models import Base
 from app.db.session import engine
 from app.services.cache import get_redis
@@ -40,24 +41,24 @@ api_router.include_router(watchlist.router)
 app.include_router(api_router)
 
 
-@app.get("/health")
+@app.get("/health", response_model=HealthResponse)
 async def health():
-    checks = {"api": "ok", "postgres": "unknown", "redis": "unknown"}
+    checks = HealthResponse(api="ok", postgres="unknown", redis="unknown")
     try:
         async with engine.connect() as conn:
             await conn.execute(text("SELECT 1"))
-        checks["postgres"] = "ok"
+        checks = checks.model_copy(update={"postgres": "ok"})
     except Exception as exc:
-        checks["postgres"] = f"error: {exc}"
+        checks = checks.model_copy(update={"postgres": f"error: {exc}"})
 
     try:
         r = await get_redis()
         await r.ping()
-        checks["redis"] = "ok"
+        checks = checks.model_copy(update={"redis": "ok"})
     except Exception as exc:
-        checks["redis"] = f"error: {exc}"
+        checks = checks.model_copy(update={"redis": f"error: {exc}"})
 
-    status_code = 200 if checks["postgres"] == "ok" else 503
     from fastapi.responses import JSONResponse
 
-    return JSONResponse(content=checks, status_code=status_code)
+    status_code = 200 if checks.postgres == "ok" else 503
+    return JSONResponse(content=checks.model_dump(), status_code=status_code)

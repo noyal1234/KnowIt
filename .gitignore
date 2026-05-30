@@ -9,3 +9,7 @@
 *.pem
 credentials.json
 service-account*.json
+
+# Cursor agent config (local / per-machine)
+.cursor/rules/
+.cursor/skills/

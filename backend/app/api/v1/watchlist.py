@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -8,7 +8,7 @@ from app.core.auth_providers.base import AuthUser
 from app.core.deps import get_current_user
 from app.db.models import IngredientWatchlist
 from app.db.session import get_db
-from app.models.schemas import WatchlistItem, WatchlistRequest
+from app.models.schemas import MessageResponse, WatchlistItem, WatchlistRequest
 
 router = APIRouter(prefix="/watchlist/ingredients", tags=["watchlist"])
 
@@ -28,10 +28,10 @@ async def list_watchlist(
         .order_by(IngredientWatchlist.created_at.desc())
     )
     rows = (await session.execute(stmt)).scalars().all()
-    return rows
+    return [WatchlistItem.model_validate(row) for row in rows]
 
 
-@router.post("", response_model=WatchlistItem)
+@router.post("", response_model=WatchlistItem, status_code=status.HTTP_201_CREATED)
 async def add_to_watchlist(
     body: WatchlistRequest,
     current_user: AuthUser = Depends(get_current_user),
@@ -44,7 +44,7 @@ async def add_to_watchlist(
     )
     existing = (await session.execute(stmt)).scalar_one_or_none()
     if existing:
-        return existing
+        return WatchlistItem.model_validate(existing)
 
     item = IngredientWatchlist(
         user_id=current_user.id,
@@ -54,10 +54,10 @@ async def add_to_watchlist(
     )
     session.add(item)
     await session.flush()
-    return item
+    return WatchlistItem.model_validate(item)
 
 
-@router.delete("/{watchlist_id}")
+@router.delete("/{watchlist_id}", response_model=MessageResponse)
 async def remove_from_watchlist(
     watchlist_id: uuid.UUID,
     current_user: AuthUser = Depends(get_current_user),
@@ -71,10 +71,10 @@ async def remove_from_watchlist(
     if not item:
         raise HTTPException(status_code=404, detail="Watchlist item not found")
     await session.delete(item)
-    return {"detail": "Removed"}
+    return MessageResponse(detail="Removed")
 
 
-@router.delete("")
+@router.delete("", response_model=MessageResponse)
 async def remove_by_key(
     label_name: str,
     e_code: str | None = None,
@@ -90,4 +90,4 @@ async def remove_by_key(
     if not item:
         raise HTTPException(status_code=404, detail="Watchlist item not found")
     await session.delete(item)
-    return {"detail": "Removed"}
+    return MessageResponse(detail="Removed")

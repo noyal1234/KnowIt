@@ -1,25 +1,47 @@
 from datetime import datetime
-from typing import Any, Literal
+from typing import Any, Literal, Self
 from uuid import UUID
 
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
+
+REQUEST_CONFIG = ConfigDict(extra="forbid")
+RESPONSE_CONFIG = ConfigDict(from_attributes=True)
+
+
+class MessageResponse(BaseModel):
+    detail: str
+
+
+class HealthResponse(BaseModel):
+    api: str
+    postgres: str
+    redis: str
+
+
+class FavoriteToggleResponse(BaseModel):
+    is_favorite: bool
 
 
 # --- Auth ---
 
 
 class RegisterRequest(BaseModel):
+    model_config = REQUEST_CONFIG
     email: EmailStr
     password: str = Field(min_length=8, max_length=128)
     display_name: str = Field(default="", max_length=255)
 
 
 class LoginRequest(BaseModel):
+    model_config = REQUEST_CONFIG
+
     email: EmailStr
     password: str
 
 
 class RefreshRequest(BaseModel):
+    model_config = REQUEST_CONFIG
+
     refresh_token: str
 
 
@@ -30,6 +52,8 @@ class TokenResponse(BaseModel):
 
 
 class ForgotPasswordRequest(BaseModel):
+    model_config = REQUEST_CONFIG
+
     email: EmailStr
 
 
@@ -45,13 +69,14 @@ class UserOut(BaseModel):
     health_goal: str | None = None
     avatar_url: str | None = None
 
-    model_config = {"from_attributes": True}
+    model_config = RESPONSE_CONFIG
 
 
 # --- Profile ---
 
 
 class ProfileUpdate(BaseModel):
+    model_config = REQUEST_CONFIG
     display_name: str | None = None
     avatar_url: str | None = None
     region: Literal["US", "EU", "IN"] | None = None
@@ -66,12 +91,20 @@ class ProfileUpdate(BaseModel):
 
 
 class ScanRequest(BaseModel):
+    model_config = REQUEST_CONFIG
+
     barcode: str | None = None
     ingredient_text: str | None = None
     image_base64: str | None = None
     storage_path: str | None = None
     product_hint: str | None = None
     region: Literal["US", "EU", "IN"] | None = None
+
+    @model_validator(mode="after")
+    def at_least_one_input(self) -> Self:
+        if not any((self.barcode, self.ingredient_text, self.image_base64, self.storage_path)):
+            raise ValueError("Provide barcode, ingredient_text, image_base64, or storage_path")
+        return self
 
 
 class ProductBrief(BaseModel):
@@ -132,6 +165,11 @@ class DashboardTrends(BaseModel):
     top_declined: list[RecentProduct] = Field(default_factory=list)
 
 
+class DashboardAlertsResponse(BaseModel):
+    active_alerts_count: int
+    recent_products: list[RecentProduct]
+
+
 class TopConcernIngredient(BaseModel):
     ingredient: str
     count: int
@@ -166,6 +204,8 @@ class ProductDetail(BaseModel):
 
 
 class ProductUpdate(BaseModel):
+    model_config = REQUEST_CONFIG
+
     notes: str | None = None
     tags: list[str] | None = None
 
@@ -226,6 +266,8 @@ class IngredientDetailResponse(BaseModel):
 
 
 class WatchlistRequest(BaseModel):
+    model_config = REQUEST_CONFIG
+
     label_name: str
     e_code: str | None = None
 
@@ -236,4 +278,4 @@ class WatchlistItem(BaseModel):
     e_code: str | None
     created_at: datetime
 
-    model_config = {"from_attributes": True}
+    model_config = RESPONSE_CONFIG

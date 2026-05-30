@@ -1,8 +1,12 @@
 """Add IngredientIQ columns to existing PostgreSQL tables (safe to re-run)."""
 
 import asyncio
+import logging
 import sys
 from pathlib import Path
+
+logging.basicConfig(level=logging.INFO, format="%(message)s")
+logger = logging.getLogger(__name__)
 
 _BACKEND_ROOT = Path(__file__).resolve().parents[1]
 if str(_BACKEND_ROOT) not in sys.path:
@@ -36,7 +40,7 @@ async def migrate() -> None:
                 CONSTRAINT uq_user_watch_ingredient UNIQUE (user_id, normalized_key)
             )
         """))
-    print("Migration complete")
+    logger.info("Migration complete")
 
 
 if __name__ == "__main__":

@@ -37,6 +37,8 @@ class Settings(BaseSettings):
     model_stage2_assist: str = "foodyllm"
     model_stage2: str = "llama-3.3-70b-versatile"
     model_stage3: str = "llama-3.1-8b-instant"
+    model_stage3_ollama: str = "meditron:8b"
+    model_ocr_llama_vision: str = "llama3.2-vision:11b"
 
     # Providers — Groq + Tavily + Tesseract only (no paid fallbacks by default)
     provider_llm: str = "groq"

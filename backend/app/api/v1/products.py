@@ -8,7 +8,7 @@ from app.core.auth_providers.base import AuthUser
 from app.core.deps import get_current_user
 from app.db.models import Product, Scan, ScanReport, UserProduct
 from app.db.session import get_db
-from app.models.schemas import ProductDetail, ProductListItem, ProductUpdate
+from app.models.schemas import FavoriteToggleResponse, MessageResponse, ProductDetail, ProductListItem, ProductUpdate
 
 router = APIRouter(prefix="/products", tags=["products"])
 
@@ -115,7 +115,7 @@ async def get_product(
     )
 
 
-@router.post("/{product_id}/favorite")
+@router.post("/{product_id}/favorite", response_model=FavoriteToggleResponse)
 async def toggle_favorite(
     product_id: uuid.UUID,
     current_user: AuthUser = Depends(get_current_user),
@@ -134,10 +134,10 @@ async def toggle_favorite(
     else:
         up.is_favorite = not up.is_favorite
     await session.flush()
-    return {"is_favorite": up.is_favorite}
+    return FavoriteToggleResponse(is_favorite=up.is_favorite)
 
 
-@router.patch("/{product_id}")
+@router.patch("/{product_id}", response_model=MessageResponse)
 async def update_product(
     product_id: uuid.UUID,
     body: ProductUpdate,
@@ -159,4 +159,4 @@ async def update_product(
     if body.tags is not None:
         up.tags = body.tags
     await session.flush()
-    return {"detail": "Updated"}
+    return MessageResponse(detail="Updated")

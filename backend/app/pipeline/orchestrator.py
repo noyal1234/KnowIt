@@ -15,6 +15,7 @@ from app.pipeline.stage0_ocr_cleanup import run_stage0_ocr_cleanup
 from app.pipeline.stage1_parse import run_stage1_parse
 from app.pipeline.stage2_enrich import run_stage2_enrich
 from app.pipeline.stage3_report import run_stage3_report
+from app.providers.registry import get_barcode_provider, get_storage_provider, ocr_with_fallback
 from app.services.ingredient_utils import compute_tier_counts
 
 logger = logging.getLogger(__name__)

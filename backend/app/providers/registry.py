@@ -135,10 +135,13 @@ async def ocr_with_fallback(image_bytes: bytes) -> tuple[str, str]:
             text = await provider.extract_text(image_bytes)
             if text.strip():
                 return text, provider.name
-        except Exception as exc:
+        except ProviderError as exc:
             last_error = exc
-            logger.warning("OCR provider %s failed: %s", name, exc)
-    raise last_error or RuntimeError("All OCR providers failed")
+            logger.warning("event=OCRProviderFailed provider=%s error=%s", name, exc)
+        except Exception as exc:
+            last_error = ProviderError(str(exc))
+            logger.warning("event=OCRProviderFailed provider=%s error=%s", name, exc)
+    raise last_error or ProviderError("All OCR providers failed")
 
 
 async def search_with_fallback(
@@ -151,7 +154,10 @@ async def search_with_fallback(
             provider = get_search_provider(name)
             results = await provider.search(query, domains=domains, max_results=max_results)
             return results, provider.name
-        except Exception as exc:
+        except ProviderError as exc:
             last_error = exc
-            logger.warning("Search provider %s failed: %s", name, exc)
-    raise last_error or RuntimeError("All search providers failed")
+            logger.warning("event=SearchProviderFailed provider=%s error=%s", name, exc)
+        except Exception as exc:
+            last_error = ProviderError(str(exc))
+            logger.warning("event=SearchProviderFailed provider=%s error=%s", name, exc)
+    raise last_error or ProviderError("All search providers failed")

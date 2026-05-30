@@ -1,3 +1,4 @@
+import asyncio
 import base64
 import json
 import logging
@@ -18,7 +19,7 @@ class GoogleVisionOCRProvider:
     async def extract_text(self, image_bytes: bytes) -> str:
         if not settings.google_vision_credentials:
             raise ProviderRetryableError("GOOGLE_VISION_CREDENTIALS not configured")
-        processed = preprocess_image(image_bytes)
+        processed = await asyncio.to_thread(preprocess_image, image_bytes)
         # Expect JSON service account or API key path
         api_key = settings.google_vision_credentials
         encoded = base64.b64encode(processed).decode()
