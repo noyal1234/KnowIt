@@ -1,0 +1,39 @@
+# =============================================================================
+# iOS / Swift / Xcode — KnowIt frontend
+# =============================================================================
+
+# macOS
+.DS_Store
+._*
+
+# Xcode — user settings & build (never commit)
+xcuserdata/
+*.xcuserstate
+
+build/
+DerivedData/
+*.moved-aside
+*.hmap
+
+# App packaging
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# CocoaPods (if added later)
+Pods/
+
+# fastlane (if added later)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Secrets
+.env
+.env.*

@@ -9,3 +9,13 @@
 *.pem
 credentials.json
 service-account*.json
+
+# Cursor — local AI rules/skills (not shared via git for now)
+.cursor/rules/
+.cursor/skills/
+
+# Xcode (monorepo — also see frontend/.gitignore)
+**/xcuserdata/
+**/*.xcuserstate
+**/DerivedData/
+**/build/
