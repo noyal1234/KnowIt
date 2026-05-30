@@ -30,24 +30,28 @@ class Settings(BaseSettings):
     # Redis
     redis_url: str = "redis://localhost:6379/0"
 
-    # Pipeline
+    # Pipeline — tiered Groq models: fast 8B for parse/report, 70B for regulatory enrichment
     pipeline_phase: Literal["build", "local"] = "build"
     model_stage0: str = "openfoodfacts/spellcheck-mistral-7b"
-    model_stage1: str = "llama-3.1-70b-versatile"
+    model_stage1: str = "llama-3.1-8b-instant"
     model_stage2_assist: str = "foodyllm"
-    model_stage2: str = "llama-3.1-70b-versatile"
-    model_stage3: str = "llama-3.1-70b-versatile"
+    model_stage2: str = "llama-3.3-70b-versatile"
+    model_stage3: str = "llama-3.1-8b-instant"
 
-    # Providers
+    # Providers — Groq + Tavily + Tesseract only (no paid fallbacks by default)
     provider_llm: str = "groq"
-    provider_llm_fallback: str = "groq,openai,anthropic"
+    provider_llm_fallback: str = ""
     provider_llm_stage0: str = "ollama"
     provider_llm_stage2_assist: str = "huggingface_local"
     provider_ocr: str = "tesseract"
-    provider_ocr_fallback: str = "google_vision,llama_vision"
+    provider_ocr_fallback: str = ""
     provider_search: str = "tavily"
-    provider_search_fallback: str = "openai_web,anthropic_web"
+    provider_search_fallback: str = ""
     provider_storage: Literal["local", "supabase"] = "local"
+
+    # Tavily budget per scan (Stage 3 searches flagged ingredients only)
+    search_max_queries: int = 5
+    search_max_results_per_query: int = 2
 
     # External API keys
     ollama_base_url: str = "http://localhost:11434"

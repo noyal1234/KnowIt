@@ -21,12 +21,20 @@ settings = get_settings()
 REPORT_TTL = 7 * 24 * 3600  # 7 days
 
 
+_TIER_SEARCH_PRIORITY = {
+    RiskTier.CONCERN: 0,
+    RiskTier.CAUTION: 1,
+    RiskTier.UNKNOWN: 2,
+}
+
+
 def _flagged(ingredients: list[EnrichedIngredient]) -> list[EnrichedIngredient]:
-    return [
+    flagged = [
         i
         for i in ingredients
         if i.risk_tier in (RiskTier.CAUTION, RiskTier.CONCERN, RiskTier.UNKNOWN)
     ]
+    return sorted(flagged, key=lambda i: (_TIER_SEARCH_PRIORITY[i.risk_tier], i.label_name))
 
 
 async def run_stage3_report(
@@ -75,11 +83,12 @@ async def run_stage3_report(
 
     search_results = []
     search_provider = None
-    max_searches = len(flagged) * 2
-    for ing in flagged[:max_searches]:
+    for ing in flagged[: settings.search_max_queries]:
         query = f"{ing.label_name} {ing.e_code or ''} food additive safety {region} FDA EFSA"
         results, search_provider = await search_with_fallback(
-            query, domains=settings.search_domains, max_results=2
+            query,
+            domains=settings.search_domains,
+            max_results=settings.search_max_results_per_query,
         )
         search_results.extend(results)
 

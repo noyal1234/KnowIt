@@ -73,9 +73,15 @@ See `.env.example`. Key settings:
 | Variable | Description |
 |---|---|
 | `AUTH_PROVIDER` | `local` or `supabase` |
-| `PIPELINE_PHASE` | `build` (Groq all stages) or `local` (specialized models) |
-| `GROQ_API_KEY` | Required for Phase A pipeline |
-| `TAVILY_API_KEY` | Stage 3 regulatory search |
+| `PIPELINE_PHASE` | `build` (Groq cloud) or `local` (Ollama/HF specialized models) |
+| `GROQ_API_KEY` | Required for build-phase pipeline |
+| `TAVILY_API_KEY` | Stage 3 regulatory search (only for flagged ingredients) |
+| `MODEL_STAGE1` | Fast parse model (default: `llama-3.1-8b-instant`) |
+| `MODEL_STAGE2` | Regulatory enrich model (default: `llama-3.3-70b-versatile`) |
+| `MODEL_STAGE3` | Report synthesis model (default: `llama-3.1-8b-instant`) |
+| `SEARCH_MAX_QUERIES` | Max Tavily searches per scan (default: `5`) |
+
+Default build-phase stack is cost-optimized: Groq 8B for parse/report, Groq 70B for enrichment, Tavily capped at 5 queries, Tesseract for free server OCR. iOS should prefer on-device OCR and send `ingredient_text` to skip server OCR entirely.
 
 ## API overview
 
