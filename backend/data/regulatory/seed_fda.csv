@@ -1,0 +1,10 @@
+canonical_name,e_code,cas_number,fda_status,eu_status,fssai_status,who_jecfa_status,adi_mg_per_kg,default_risk_tier,function,iupac_name,banned_in,at_risk_groups,source_url
+Sodium Benzoate,E211,532-32-1,GRAS,Approved,Permitted,ADI Set,2.5,safe,Preservative,Sodium salt of benzoic acid,,Children under 12|Aspirin sensitivity,https://www.fda.gov
+Sodium Nitrite,E250,7632-00-0,Permitted with limits,Approved with restrictions,Permitted with limits,ADI Set,0.07,concern,Preservative,Sodium nitrite,Russia|Japan,Children under 12|Pregnant women,https://www.fda.gov
+Aspartame,E951,22839-47-0,Approved,Approved,Permitted,ADI Set,40,caution,Artificial sweetener,N-(L-α-Aspartyl)-L-phenylalanine methyl ester,,Pregnant women|Phenylketonuria (PKU),https://www.efsa.europa.eu
+Ascorbic Acid,E300,50-81-7,GRAS,Approved,Permitted,Approved,,-1,safe,Antioxidant,L-ascorbic acid,,,https://www.fda.gov
+Tartrazine,E102,1934-21-0,Permitted,Requires warning,Permitted with limits,ADI Set,7.5,caution,Colorant,Trisodium 5-hydroxy-1-(4-sulfonatophenyl)-4-(4-sulfonatophenylazo)pyrazole-3-carboxylate,Norway|Austria,Children under 12|Asthma sufferers,https://www.efsa.europa.eu
+Potassium Sorbate,E202,24634-61-5,GRAS,Approved,Permitted,ADI Set,25,safe,Preservative,Potassium (E,E)-hexa-2,4-dienoate,,,https://www.fda.gov
+Citric Acid,E330,77-92-9,GRAS,Approved,Permitted,Approved,,-1,safe,Acidity regulator,2-hydroxypropane-1,2,3-tricarboxylic acid,,,https://www.fda.gov
+Butylated Hydroxyanisole,E320,25013-16-5,Permitted with limits,Under review,Restricted,Under review,0.5,concern,Antioxidant,1,1-dimethylethyl-4-methoxyphenol,Japan,Children under 12,https://www.fda.gov
+Sucralose,E955,56038-13-2,Approved,Approved,Permitted,ADI Set,15,safe,Artificial sweetener,1,6-Dichloro-1,6-dideoxy-β-D-fructofuranosyl-4-chloro-4-deoxy-α-D-galactopyranoside,,,https://www.fda.gov

@@ -1,0 +1,11 @@
+canonical_name,e_code,cas_number,fda_status,eu_status,fssai_status,adi_mg_per_kg,default_risk_tier,source_url
+Curcumin,E100,458-37-7,GRAS,Approved,Permitted,,-1,safe,https://www.efsa.europa.eu
+Tartrazine,E102,1934-21-0,Permitted,Approved with label,Permitted,7.5,caution,https://www.efsa.europa.eu
+Sunset Yellow FCF,E110,2783-94-0,Permitted,Approved with label,Permitted,2.5,caution,https://www.efsa.europa.eu
+Cochineal,E120,1260-17-9,Permitted,Approved,Permitted,5,caution,https://www.efsa.europa.eu
+Ascorbic Acid,E300,50-81-7,GRAS,Approved,Permitted,,-1,safe,https://www.efsa.europa.eu
+Tocopherol,E306,,GRAS,Approved,Permitted,,-1,safe,https://www.efsa.europa.eu
+Sodium Nitrite,E250,7632-00-0,Permitted,Approved with limits,Permitted,0.07,concern,https://www.efsa.europa.eu
+Potassium Sorbate,E202,24634-61-5,GRAS,Approved,Permitted,25,safe,https://www.efsa.europa.eu
+Xanthan Gum,E415,11138-66-2,GRAS,Approved,Permitted,,-1,safe,https://www.efsa.europa.eu
+Aspartame,E951,22839-47-0,Approved,Approved,Permitted,40,caution,https://www.efsa.europa.eu
