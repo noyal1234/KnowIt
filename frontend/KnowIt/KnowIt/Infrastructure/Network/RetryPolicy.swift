@@ -1,6 +1,7 @@
 import Foundation
+import Darwin
 
-enum RetryPolicy: Sendable {
+nonisolated enum RetryPolicy: Sendable {
     case none
     case exponential(maxAttempts: Int, baseDelay: TimeInterval = 0.5)
 

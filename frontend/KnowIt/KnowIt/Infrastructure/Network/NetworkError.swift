@@ -1,6 +1,6 @@
 import Foundation
 
-enum NetworkError: Error, LocalizedError, Sendable {
+nonisolated enum NetworkError: Error, LocalizedError, Sendable {
     case invalidURL(String)
     case unauthorized
     case forbidden

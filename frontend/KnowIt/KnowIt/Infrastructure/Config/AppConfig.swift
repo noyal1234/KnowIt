@@ -1,6 +1,6 @@
 import Foundation
 
-enum AppConfig {
+nonisolated enum AppConfig {
     static let appName = "KnowIt"
     static let platform = "ios"
 
@@ -13,7 +13,9 @@ enum AppConfig {
     }
 
     static var apiBaseURL: URL {
-        if let override = ServerConfig.shared.httpBaseURL,
+        let devBaseURLKey = "knowit.dev.httpBaseURL"
+        if let override = UserDefaults.standard.string(forKey: devBaseURLKey),
+           !override.isEmpty,
            let url = URL(string: override) {
             return url
         }

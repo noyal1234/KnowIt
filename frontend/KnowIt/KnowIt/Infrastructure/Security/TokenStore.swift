@@ -1,11 +1,12 @@
 import Foundation
+import OSLog
 
 extension Notification.Name {
     static let knowItSessionExpired = Notification.Name("com.knowit.sessionExpired")
     static let knowItAuthStateChanged = Notification.Name("com.knowit.authStateChanged")
 }
 
-final class TokenStore: TokenStoreProtocol, @unchecked Sendable {
+nonisolated final class TokenStore: TokenStoreProtocol, @unchecked Sendable {
     var refreshHandler: (@Sendable () async throws -> Void)?
 
     func validAccessToken() async throws -> String {

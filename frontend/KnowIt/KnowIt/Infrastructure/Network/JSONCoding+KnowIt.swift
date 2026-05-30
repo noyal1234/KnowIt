@@ -1,7 +1,7 @@
 import Foundation
 
 extension JSONDecoder {
-    static let apiDecoder: JSONDecoder = {
+    nonisolated static let apiDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         decoder.dateDecodingStrategy = .iso8601
@@ -10,7 +10,7 @@ extension JSONDecoder {
 }
 
 extension JSONEncoder {
-    static let apiEncoder: JSONEncoder = {
+    nonisolated static let apiEncoder: JSONEncoder = {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
         encoder.dateEncodingStrategy = .iso8601

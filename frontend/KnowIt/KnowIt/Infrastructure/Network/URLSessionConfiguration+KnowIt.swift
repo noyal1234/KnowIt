@@ -1,7 +1,7 @@
 import Foundation
 
 extension URLSessionConfiguration {
-    static var knowItDefault: URLSessionConfiguration {
+    nonisolated static var knowItDefault: URLSessionConfiguration {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 30
         config.timeoutIntervalForResource = 120

@@ -1,4 +1,4 @@
-enum HTTPMethod: String, Sendable {
+nonisolated enum HTTPMethod: String, Sendable {
     case GET
     case POST
     case PUT

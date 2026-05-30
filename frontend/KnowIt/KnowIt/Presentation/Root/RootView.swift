@@ -1,4 +1,5 @@
 import SwiftUI
+import OSLog
 
 struct RootView: View {
     @State private var viewModel: RootViewModel

@@ -1,4 +1,4 @@
-struct LoginUseCase: Sendable {
+nonisolated struct LoginUseCase: Sendable {
     private let repository: AuthRepositoryProtocol
 
     init(repository: AuthRepositoryProtocol) {
@@ -10,7 +10,7 @@ struct LoginUseCase: Sendable {
     }
 }
 
-struct RegisterUseCase: Sendable {
+nonisolated struct RegisterUseCase: Sendable {
     private let repository: AuthRepositoryProtocol
 
     init(repository: AuthRepositoryProtocol) {
@@ -22,7 +22,7 @@ struct RegisterUseCase: Sendable {
     }
 }
 
-struct FetchCurrentUserUseCase: Sendable {
+nonisolated struct FetchCurrentUserUseCase: Sendable {
     private let repository: AuthRepositoryProtocol
 
     init(repository: AuthRepositoryProtocol) {
@@ -34,7 +34,7 @@ struct FetchCurrentUserUseCase: Sendable {
     }
 }
 
-struct LogoutUseCase: Sendable {
+nonisolated struct LogoutUseCase: Sendable {
     private let repository: AuthRepositoryProtocol
 
     init(repository: AuthRepositoryProtocol) {

@@ -1,4 +1,4 @@
-final class AuthRemoteDataSource: Sendable {
+nonisolated final class AuthRemoteDataSource: Sendable {
     private let apiClient: APIClientProtocol
 
     init(apiClient: APIClientProtocol) {

@@ -8,7 +8,7 @@ protocol RequestBuilderProtocol: Sendable {
     ) async throws -> URLRequest
 }
 
-final class RequestBuilder: RequestBuilderProtocol {
+nonisolated final class RequestBuilder: RequestBuilderProtocol {
     func build(
         _ endpoint: APIEndpoint,
         baseURL: URL,
@@ -57,7 +57,7 @@ final class RequestBuilder: RequestBuilderProtocol {
 }
 
 /// Type-erased Encodable wrapper for heterogeneous endpoint bodies.
-private struct AnyEncodable: Encodable {
+private nonisolated struct AnyEncodable: Encodable {
     private let encode: (Encoder) throws -> Void
 
     init(_ wrapped: Encodable) {

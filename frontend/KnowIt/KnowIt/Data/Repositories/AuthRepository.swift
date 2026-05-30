@@ -1,4 +1,4 @@
-final class AuthRepository: AuthRepositoryProtocol, @unchecked Sendable {
+nonisolated final class AuthRepository: AuthRepositoryProtocol, @unchecked Sendable {
     private let remote: AuthRemoteDataSource
     private let tokenStore: TokenStoreProtocol
 

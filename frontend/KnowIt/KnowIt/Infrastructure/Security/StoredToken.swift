@@ -1,6 +1,6 @@
 import Foundation
 
-struct StoredToken: Sendable {
+nonisolated struct StoredToken: Sendable {
     let accessToken: String
     let refreshToken: String
 

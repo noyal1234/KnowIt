@@ -1,11 +1,12 @@
 import Foundation
+import OSLog
 
 protocol APIClientProtocol: Sendable {
     func request<T: Decodable & Sendable>(_ endpoint: APIEndpoint) async throws -> T
     func requestEmpty(_ endpoint: APIEndpoint) async throws
 }
 
-final class APIClient: APIClientProtocol {
+nonisolated final class APIClient: APIClientProtocol {
     private let session: URLSession
     private let baseURL: URL
     private let tokenStore: TokenStoreProtocol

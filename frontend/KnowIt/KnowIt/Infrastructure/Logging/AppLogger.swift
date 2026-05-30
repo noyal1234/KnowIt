@@ -1,6 +1,6 @@
 import OSLog
 
-enum AppLogger {
+nonisolated enum AppLogger {
     private static let subsystem = Bundle.main.bundleIdentifier ?? "com.knowit.KnowIt"
 
     static let network = Logger(subsystem: subsystem, category: "network")

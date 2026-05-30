@@ -1,6 +1,6 @@
 import Foundation
 
-enum APIEndpoint: RequestBuildable {
+nonisolated enum APIEndpoint: RequestBuildable {
     case login(email: String, password: String)
     case register(email: String, password: String, displayName: String)
     case refreshToken(refreshToken: String)

@@ -1,7 +1,7 @@
 import Foundation
 import Security
 
-enum KeychainHelper {
+nonisolated enum KeychainHelper {
     @discardableResult
     static func save(_ value: String, forKey key: String) -> Bool {
         guard let data = value.data(using: .utf8) else { return false }

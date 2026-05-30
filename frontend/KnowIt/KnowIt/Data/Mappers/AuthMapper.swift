@@ -1,4 +1,4 @@
-enum AuthMapper {
+nonisolated enum AuthMapper {
     static func toUser(from dto: UserDTO) -> User {
         User(
             id: dto.id,

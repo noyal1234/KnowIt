@@ -1,4 +1,6 @@
-enum AuthError: Error, LocalizedError, Sendable {
+import Foundation
+
+nonisolated enum AuthError: Error, LocalizedError, Sendable {
     case invalidCredentials
     case sessionExpired
     case registrationFailed(message: String)
